@@ -22,7 +22,8 @@
 @property (nonatomic, assign) IBInspectable CGFloat squareSizeHeight;
 @property (nonatomic, assign) IBInspectable BOOL cameraPerspective;
 
-@property (nonatomic, strong) UIImage *floorImage;
+@property (nonatomic, weak) IBOutlet UIView *boardView;
+@property (nonatomic, weak) IBOutlet UIView *restAreaView;
 
 - (IBAction)rollTheDice:(id)sender;
 
