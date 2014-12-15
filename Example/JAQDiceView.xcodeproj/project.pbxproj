@@ -16,7 +16,6 @@
 		6003F5A1195388D20070C39A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6003F59F195388D20070C39A /* Main.storyboard */; };
 		6003F5A7195388D20070C39A /* JAQViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* JAQViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
-		AC3DAAFE1A3F116C00D53B1A /* Dices.dae in Resources */ = {isa = PBXBuildFile; fileRef = AC3DAAFD1A3F116C00D53B1A /* Dices.dae */; };
 		F0104DCFB9F12610015F1B0B /* libPods-JAQDiceView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B585639DA9B95E41C0B5503 /* libPods-JAQDiceView.a */; };
 /* End PBXBuildFile section */
 
@@ -48,7 +47,6 @@
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		6AD0B4041B44C8C842BE9F39 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A699CD6656D3064A5767D613 /* Pods-JAQDiceView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JAQDiceView.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JAQDiceView/Pods-JAQDiceView.debug.xcconfig"; sourceTree = "<group>"; };
-		AC3DAAFD1A3F116C00D53B1A /* Dices.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; path = Dices.dae; sourceTree = "<group>"; };
 		E1E0108932FD6C2EBAB29995 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -117,7 +115,6 @@
 				6003F59C195388D20070C39A /* JAQAppDelegate.h */,
 				6003F59D195388D20070C39A /* JAQAppDelegate.m */,
 				6003F59F195388D20070C39A /* Main.storyboard */,
-				AC3DAAFD1A3F116C00D53B1A /* Dices.dae */,
 				6003F5A5195388D20070C39A /* JAQViewController.h */,
 				6003F5A6195388D20070C39A /* JAQViewController.m */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
@@ -222,7 +219,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
-				AC3DAAFE1A3F116C00D53B1A /* Dices.dae in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);

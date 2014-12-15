@@ -12,6 +12,8 @@
 #define RADIANS_TO_DEGREES(radians) ((radians) * (180.0 / M_PI))
 #define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
 
+#define WALL_THICKNESS 3
+
 @interface JAQDiceView ()
 @property (nonatomic, strong) SCNNode *diceGroup;
 @property (nonatomic, strong) SCNNode *dice1;
@@ -42,7 +44,6 @@
 	
 	if (!self.maximumJumpHeight) self.maximumJumpHeight = 120;
 	if (!self.squareSizeHeight || self.squareSizeHeight<30) self.squareSizeHeight = 60;
-//	if (self.floorImageName) self.floorImage = [UIImage imageNamed:self.floorImageName];
 	
 	[self loadScene];
 }
@@ -50,14 +51,10 @@
 - (void)loadScene {
 	NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"JAQDiceView" withExtension:@"bundle"];
 	NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
-//	NSBundle *bundle = [NSBundle mainBundle];
 	
 	NSURL *url = [bundle URLForResource:@"Dices" withExtension:@"dae"];
 	self.scene = [SCNScene sceneWithURL:url options:nil error:nil];
 	
-//	if (!self.floorImage) self.floorImage = [UIImage imageNamed:@"woodTile"
-//													   inBundle:bundle
-//								  compatibleWithTraitCollection:nil];
 	self.timesStopped = 0;
 	self.scene.physicsWorld.gravity = SCNVector3Make(0, -980, 0);
 	
@@ -106,9 +103,6 @@
 	[self.scene.rootNode addChildNode:diffuseLightFrontNode];
 	
 	[self placeWallsInScene:self.scene adjustToView:self.restAreaView height:self.cameraHeight+20];
-//	[self placeWallsInScene:self.scene adjustToView:self.boardView height:self.cameraHeight-10];
-	
-//	[self adjustWallsToView:self.boardView];
 	
 	self.pointOfView = self.camera;
 	self.allowsCameraControl = YES;
@@ -129,40 +123,9 @@
 }
 
 - (SCNVector3)placeWallsInScene:(SCNScene *)scene adjustToView:(UIView *)view height: (CGFloat) height {
-
-//	SCNVector3 boundingMin;
-//	SCNVector3 boundingMax;
-//	if ([self.dice1 getBoundingBoxMin:&boundingMin max:&boundingMax]) {
-//		self.cameraHeight -= (boundingMax.y-boundingMin.y);
-//	}
-	
-	/*CGFloat frustumWidth = 2*self.cameraHeight*tan(DEGREES_TO_RADIANS(self.camera.camera.xFov)/2);
-	CGFloat frustumHeight = 2*self.cameraHeight*tan(DEGREES_TO_RADIANS(self.camera.camera.yFov)/2);
-	
-	CGFloat proportionContainerViewScene = self.bounds.size.width/frustumWidth;
-	
-	CGPoint convertedOriginPoint = [self convertPoint:CGPointZero fromView:view];
-	convertedOriginPoint.x /= proportionContainerViewScene;
-	convertedOriginPoint.y /= proportionContainerViewScene;
-	
-	convertedOriginPoint.x -= frustumWidth/2;
-	convertedOriginPoint.y -= frustumHeight/2;
-	
-	CGPoint convertedFinalPoint = [self convertPoint:CGPointMake(view.bounds.size.width,view.bounds.size.height) fromView:view];
-	convertedFinalPoint.x /= proportionContainerViewScene;
-	convertedFinalPoint.y /= proportionContainerViewScene;
-	
-	convertedFinalPoint.x -= frustumWidth/2;
-	convertedFinalPoint.y -= frustumHeight/2;
-	
-	SCNVector3 origin = SCNVector3Make(convertedOriginPoint.x, convertedOriginPoint.y, 0);
-	SCNVector3 final = SCNVector3Make(convertedFinalPoint.x, convertedFinalPoint.y, 0);*/
 	
 	SCNVector3 origin = [self scenePoint:CGPointZero fromView:view];
 	SCNVector3 final = [self scenePoint:CGPointMake(view.bounds.size.width,view.bounds.size.height) fromView:view];
-	
-//	SCNVector3 origin = SCNVector3Make(-frustumWidth/2, -frustumHeight/2, 0);
-//	SCNVector3 final = SCNVector3Make(+frustumWidth/2, +frustumHeight/2, 0);
 	
 	CGFloat viewWidth = final.x-origin.x;
 	CGFloat viewHeight = final.y-origin.y;
@@ -176,27 +139,27 @@
 	// Walls position corresponds to their center
 	self.leftWall = [SCNNode node];
 	self.leftWall.position = SCNVector3Make(origin.x, h2, origin.y+viewHeight/2);
-	self.leftWall.geometry = [SCNBox boxWithWidth:1 height:height length:wallLength chamferRadius:0];
+	self.leftWall.geometry = [SCNBox boxWithWidth:WALL_THICKNESS height:height length:wallLength chamferRadius:0];
 	[scene.rootNode addChildNode:self.leftWall];
 	
 	self.frontWall = [SCNNode node];
 	self.frontWall.position = SCNVector3Make(origin.x+viewWidth/2, h2, origin.y+viewHeight);
-	self.frontWall.geometry = [SCNBox boxWithWidth:wallLength height:height length:1 chamferRadius:0];
+	self.frontWall.geometry = [SCNBox boxWithWidth:wallLength height:height length:WALL_THICKNESS chamferRadius:0];
 	[scene.rootNode addChildNode:self.frontWall];
 	
 	self.rightWall = [SCNNode node];
 	self.rightWall.position = SCNVector3Make(origin.x+viewWidth, h2, origin.y+viewHeight/2);
-	self.rightWall.geometry = [SCNBox boxWithWidth:1 height:height length:wallLength chamferRadius:0];
+	self.rightWall.geometry = [SCNBox boxWithWidth:WALL_THICKNESS height:height length:wallLength chamferRadius:0];
 	[scene.rootNode addChildNode:self.rightWall];
 	
 	self.backWall = [SCNNode node];
 	self.backWall.position = SCNVector3Make(origin.x+viewWidth/2, h2, origin.y);
-	self.backWall.geometry = [SCNBox boxWithWidth:wallLength height:height length:1 chamferRadius:0];
+	self.backWall.geometry = [SCNBox boxWithWidth:wallLength height:height length:WALL_THICKNESS chamferRadius:0];
 	[scene.rootNode addChildNode:self.backWall];
 	
 	self.topWall = [SCNNode node];
 	self.topWall.position = SCNVector3Make(origin.x+viewWidth/2, height, origin.y+viewHeight/2);
-	self.topWall.geometry = [SCNBox boxWithWidth:wallLength height:1 length:wallLength chamferRadius:0];
+	self.topWall.geometry = [SCNBox boxWithWidth:wallLength height:WALL_THICKNESS length:wallLength chamferRadius:0];
 	[scene.rootNode addChildNode:self.topWall];
 	
 	[self applyRigidPhysics:self.leftWall];
@@ -216,40 +179,26 @@
 	return SCNVector3Make(origin.x+viewWidth/2, 0, origin.y+viewHeight/2);
 }
 
-- (SCNVector3) adjustWallsToView:(UIView *)view {
+- (void) adjustWallsToView:(UIView *)view {
 	SCNVector3 origin = [self scenePoint:CGPointZero fromView:view];
 	SCNVector3 final = [self scenePoint:CGPointMake(view.bounds.size.width,view.bounds.size.height) fromView:view];
 
 	CGFloat viewWidth = final.x-origin.x;
 	CGFloat viewHeight = final.y-origin.y;
 	
-	SCNVector3 center = SCNVector3Make((final.x+origin.x)/2, (final.z+origin.z)/2,(final.y+origin.y)/2);
-	
 	[SCNTransaction setAnimationDuration:2];
 	
-//	self.dice1.physicsBody.
-//	self.dice1.position = center;
-
-//	self.dice1.position = SCNVector3Make(center.x, center.z, center.y);
-//	self.dice2.position = SCNVector3Make(center.x, center.z, center.y);
-//	[self.dice1.physicsBody resetTransform];
-//	[self.dice2.physicsBody resetTransform];
-	
-//	self.diceGroup.position = SCNVector3Make(center.x, center.z, center.y);
-
 	self.leftWall.position = SCNVector3Make(origin.x, self.leftWall.position.y, origin.y+viewHeight/2);
 	self.frontWall.position = SCNVector3Make(origin.x+viewWidth/2, self.frontWall.position.y, origin.y+viewHeight);
 	self.rightWall.position = SCNVector3Make(origin.x+viewWidth, self.rightWall.position.y, origin.y+viewHeight/2);
 	self.backWall.position = SCNVector3Make(origin.x+viewWidth/2, self.backWall.position.y, origin.y);
 	self.topWall.position = SCNVector3Make(origin.x+viewWidth/2, self.topWall.position.y, origin.y+viewHeight/2);
-	
-	return SCNVector3Make((final.x+origin.x)/2, (final.z+origin.z)/2,(final.y+origin.y)/2);
 }
 
 - (void)applyRigidPhysics:(SCNNode *)node {
 	node.physicsBody = [SCNPhysicsBody bodyWithType:SCNPhysicsBodyTypeKinematic
 											  shape:[SCNPhysicsShape shapeWithNode:node options:nil]];
-	node.opacity = 0.5f;
+	node.opacity = 0.0f;
 }
 
 - (CGFloat)randomJump {
@@ -283,9 +232,6 @@
 #endif
 		if (self.timesStopped>threshold) {
 			[self.timer invalidate];
-			
-//			[self.dice1.physicsBody resetTransform];
-//			[self.dice2.physicsBody resetTransform];
 			
 			[self adjustWallsToView:self.restAreaView];
 			
