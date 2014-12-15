@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		082587F597E3AD5D9B3B6693 /* Pods-JAQDiceView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DCE1F2FEBC17BA01325A710 /* Pods-JAQDiceView-dummy.m */; };
-		26E5A1A1BCF004E9DB5B1C5F /* Dices.dae in Resources */ = {isa = PBXBuildFile; fileRef = D82ED156F1B741416C8A7B75 /* Dices.dae */; };
 		39187C08E5F35001315EB758 /* SCNNode+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 777EF3AE40F7658C6FF72D4B /* SCNNode+Utils.m */; };
 		6359A128B560563644DD593B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56A12B1D43B93F73570B0AA8 /* Foundation.framework */; };
 		68E2AD4EFBCEE7704554BA68 /* SCNNode+Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = AFBFC014CF75E01D65881B46 /* SCNNode+Utils.h */; };
@@ -294,7 +293,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26E5A1A1BCF004E9DB5B1C5F /* Dices.dae in Resources */,
 				EA4AE8576D51EFAE3C99B8F7 /* woodTile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
