@@ -49,8 +49,8 @@
 
 - (void)loadScene {
 	NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"JAQDiceView" withExtension:@"bundle"];
-//	NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
-	NSBundle *bundle = [NSBundle mainBundle];
+	NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
+//	NSBundle *bundle = [NSBundle mainBundle];
 	
 	NSURL *url = [bundle URLForResource:@"Dices" withExtension:@"dae"];
 	self.scene = [SCNScene sceneWithURL:url options:nil error:nil];
