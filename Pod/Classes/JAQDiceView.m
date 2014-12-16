@@ -188,31 +188,26 @@
 	
 	// Walls position corresponds to their center
 	self.leftWall = [SCNNode node];
-	self.leftWall.opacity = 0.0f;
 	self.leftWall.position = SCNVector3Make(origin.x, h2, origin.y+viewHeight/2);
 	self.leftWall.geometry = [SCNBox boxWithWidth:WALL_THICKNESS height:height length:wallLength chamferRadius:0];
 	[scene.rootNode addChildNode:self.leftWall];
 	
 	self.frontWall = [SCNNode node];
-	self.frontWall.opacity = 0.0f;
 	self.frontWall.position = SCNVector3Make(origin.x+viewWidth/2, h2, origin.y+viewHeight);
 	self.frontWall.geometry = [SCNBox boxWithWidth:wallLength height:height length:WALL_THICKNESS chamferRadius:0];
 	[scene.rootNode addChildNode:self.frontWall];
 	
 	self.rightWall = [SCNNode node];
-	self.rightWall.opacity = 0.0f;
 	self.rightWall.position = SCNVector3Make(origin.x+viewWidth, h2, origin.y+viewHeight/2);
 	self.rightWall.geometry = [SCNBox boxWithWidth:WALL_THICKNESS height:height length:wallLength chamferRadius:0];
 	[scene.rootNode addChildNode:self.rightWall];
 	
 	self.backWall = [SCNNode node];
-	self.backWall.opacity = 0.0f;
 	self.backWall.position = SCNVector3Make(origin.x+viewWidth/2, h2, origin.y);
 	self.backWall.geometry = [SCNBox boxWithWidth:wallLength height:height length:WALL_THICKNESS chamferRadius:0];
 	[scene.rootNode addChildNode:self.backWall];
 	
 	self.topWall = [SCNNode node];
-	self.topWall.opacity = 0.0f;
 	self.topWall.position = SCNVector3Make(origin.x+viewWidth/2, height, origin.y+viewHeight/2);
 	self.topWall.geometry = [SCNBox boxWithWidth:wallLength height:WALL_THICKNESS length:wallLength chamferRadius:0];
 	[scene.rootNode addChildNode:self.topWall];
