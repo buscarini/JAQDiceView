@@ -87,7 +87,7 @@
 	self.camera.camera.zFar = self.maximumJumpHeight*2;
 	self.camera.eulerAngles = SCNVector3Make(-M_PI/2, 0, 0);
 	
-	self.cameraHeight = self.maximumJumpHeight-20;
+	self.cameraHeight = self.maximumJumpHeight+50;
 	
 	self.camera.position = SCNVector3Make(0, self.cameraHeight, 0);
 //	if (self.cameraPerspective) {
@@ -105,7 +105,13 @@
 	[self placeWallsInScene:self.scene adjustToView:self.restAreaView height:self.cameraHeight+20];
 	
 	self.pointOfView = self.camera;
-	self.allowsCameraControl = YES;
+	self.allowsCameraControl = NO;
+}
+
+- (IBAction)resetScene:(id)sender {
+	self.camera.camera.yFov = 60;
+	self.camera.camera.xFov = self.camera.camera.yFov*(self.bounds.size.width/self.bounds.size.height);
+	[self adjustWallsToView:self.restAreaView];
 }
 
 - (SCNVector3) scenePoint:(CGPoint)point fromView:(UIView *)view {
@@ -186,19 +192,27 @@
 	CGFloat viewWidth = final.x-origin.x;
 	CGFloat viewHeight = final.y-origin.y;
 	
-	[SCNTransaction setAnimationDuration:2];
+	[SCNTransaction setAnimationDuration:3];
 	
 	self.leftWall.position = SCNVector3Make(origin.x, self.leftWall.position.y, origin.y+viewHeight/2);
 	self.frontWall.position = SCNVector3Make(origin.x+viewWidth/2, self.frontWall.position.y, origin.y+viewHeight);
 	self.rightWall.position = SCNVector3Make(origin.x+viewWidth, self.rightWall.position.y, origin.y+viewHeight/2);
 	self.backWall.position = SCNVector3Make(origin.x+viewWidth/2, self.backWall.position.y, origin.y);
 	self.topWall.position = SCNVector3Make(origin.x+viewWidth/2, self.topWall.position.y, origin.y+viewHeight/2);
+	
+	[SCNTransaction setCompletionBlock:^{
+		if ([self.delegate respondsToSelector:@selector(dicesAdjustedToView:)]) {
+			[self.delegate dicesAdjustedToView:view];
+		}
+	}];
 }
 
 - (void)applyRigidPhysics:(SCNNode *)node {
 	node.physicsBody = [SCNPhysicsBody bodyWithType:SCNPhysicsBodyTypeKinematic
 											  shape:[SCNPhysicsShape shapeWithNode:node options:nil]];
-	node.opacity = 0.0f;
+
+	if (self.showWalls) node.opacity = 0.5f;
+	else node.opacity = 0.0f;
 }
 
 - (CGFloat)randomJump {
@@ -240,10 +254,15 @@
 				   rolledWithFirstValue:[self.dice1 jaq_boxUpIndex]
 							secondValue:[self.dice2 jaq_boxUpIndex]];
 			}
+
+			[self adjustWallsToView:self.restAreaView];
 		}
 	} else {
 		self.timesStopped = 0;
 	}
 }
 
+
 @end
+
+
