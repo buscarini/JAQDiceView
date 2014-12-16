@@ -48,6 +48,20 @@
 	[self loadScene];
 }
 
+- (void) setShowWalls:(BOOL)showWalls {
+	_showWalls = showWalls;
+	
+	BOOL opacity = 0.01;
+	if (showWalls) opacity = 0.5;
+	
+	self.leftWall.opacity = opacity;
+	self.rightWall.opacity = opacity;
+	self.frontWall.opacity = opacity;
+	self.backWall.opacity = opacity;
+	self.topWall.opacity = opacity;
+	self.bottomWall.opacity = opacity;
+}
+
 - (void)loadScene {
 	NSURL *bundleUrl = [[NSBundle mainBundle] URLForResource:@"JAQDiceView" withExtension:@"bundle"];
 	NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
@@ -212,7 +226,7 @@
 											  shape:[SCNPhysicsShape shapeWithNode:node options:nil]];
 
 	if (self.showWalls) node.opacity = 0.5f;
-	else node.opacity = 0.0f;
+	else node.opacity = 0.01f;
 }
 
 - (CGFloat)randomJump {
