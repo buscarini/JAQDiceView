@@ -12,6 +12,7 @@
 
 @protocol JAQDiceProtocol <NSObject>
 
+- (void) diceViewWillRoll:(JAQDiceView *)view;
 - (void)diceView:(JAQDiceView *)view rolledWithFirstValue:(NSInteger)firstValue secondValue:(NSInteger)secondValue;
 
 @optional

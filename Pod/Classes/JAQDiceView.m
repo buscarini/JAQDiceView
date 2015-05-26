@@ -34,6 +34,8 @@
 @property (nonatomic, assign) CGFloat cameraHeight;
 @property (nonatomic, assign) CGFloat wallsHeight;
 
+@property (nonatomic) BOOL rolling;
+
 @property (nonatomic, copy) IBInspectable NSString *floorImageName;
 @end
 
@@ -266,6 +268,13 @@
 }
 
 - (IBAction)rollTheDice:(id)sender {
+	if ([self.delegate respondsToSelector:@selector(diceViewWillRoll:)]) {
+		[self.delegate diceViewWillRoll:self];
+	}
+	
+	if (self.rolling) return;
+	self.rolling = YES;
+	
 	[self.dice1.physicsBody applyTorque:SCNVector4Make([self randomJump], -12, 0, 10) impulse:YES];
 	[self.dice2.physicsBody applyTorque:SCNVector4Make([self randomJump], +10, 0, 10) impulse:YES];
 	[self adjustWallsToView:self.boardView];
@@ -292,6 +301,8 @@
 			[self.timer invalidate];
 			
 			[self adjustWallsToView:self.restAreaView];
+			
+			self.rolling = NO;
 			
 			if ([self.delegate respondsToSelector:@selector(diceView:rolledWithFirstValue:secondValue:)]) {
 				[self.delegate diceView:self
